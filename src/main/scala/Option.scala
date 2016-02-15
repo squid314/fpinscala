@@ -18,13 +18,8 @@ sealed trait Option[+A] {
 case object None extends Option[Nothing]
 case class Some[+A](get: A) extends Option[A]
 
-object Option {
-}
-
 object OptionCode {
-  import Option._
-
-  def main(args: Array[String]) {
+  def notmain(args: Array[String]) {
     val a:Option[String] = Some("a")
     val b:Option[String] = Some("b")
     val n:Option[String] = None
