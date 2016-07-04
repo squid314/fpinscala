@@ -4,23 +4,27 @@ import us.blmq.support.UnitSpec
 
 class OptionTest extends UnitSpec
 {
-    behavior of "An Option"
-    ignore should "behave thusly" in
+    "An Option" should "behave thusly" in
         {
             val a: Option[String] = Some("a")
             val b: Option[String] = Some("b")
             val n: Option[String] = None
 
-            info("map: " + a.map(_ + " map"))
-            info("getOrElse: " + a.getOrElse("asdf"))
-            info("getOrElse: " + n.getOrElse("asdf"))
-            info("flatMap: " + a.flatMap(a => if (a.contains("a")) Some("contains") else None))
-            info("flatMap: " + n.flatMap(a => if (a.contains("a")) Some("contains") else None))
-            info("filter: " + a.filter(_.contains("a")))
-            info("filter: " + a.filter(_.contains("b")))
-            info("orElse: " + a.orElse(b))
-            info("orElse: " + n.orElse(b))
-            info("orElse: " + n.orElse(n))
+            a.map(_ + " map") shouldBe Some("a map")
+
+            a.getOrElse("asdf") shouldBe "a"
+            n.getOrElse("asdf") shouldBe "asdf"
+
+            val fm: (String) => Option[String] = a => if (a.contains("a")) Some("contains") else None
+            a.flatMap(fm) shouldBe Some("contains")
+            n.flatMap(fm) shouldBe None
+
+            a.filter(_.contains("a")) shouldBe Some("a")
+            a.filter(_.contains("b")) shouldBe None
+
+            a.orElse(b) shouldBe Some("a")
+            n.orElse(b) shouldBe Some("b")
+            n.orElse(n) shouldBe None
         }
 
     "The mean method" should "return None for an empty list" in
@@ -59,6 +63,6 @@ class OptionTest extends UnitSpec
         {
             Option.variance(List(1, 3)) shouldBe Some(1)
             Option.variance(List(1, 2, 2, 3)) shouldBe Some(0.5)
-            Option.variance(List(1, 2,2,2,2,2, 2, 3)) shouldBe Some(0.25)
+            Option.variance(List(1, 2, 2, 2, 2, 2, 2, 3)) shouldBe Some(0.25)
         }
 }
