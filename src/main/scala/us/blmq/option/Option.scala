@@ -32,25 +32,3 @@ object Option
     def variance(is: Seq[Double]): Option[Double] =
         mean(is).flatMap(m => mean(is.map(x => Math.pow(x - m, 2))))
 }
-
-object OptionCode
-{
-    def notmain(args: Array[String])
-    {
-        val a: Option[String] = Some("a")
-        val b: Option[String] = Some("b")
-        val n: Option[String] = None
-
-        println
-        println("map: " + a.map(_ + " map"))
-        println("getOrElse: " + a.getOrElse("asdf"))
-        println("getOrElse: " + n.getOrElse("asdf"))
-        println("flatMap: " + a.flatMap(a => if (a.contains("a")) Some("contains") else None))
-        println("flatMap: " + n.flatMap(a => if (a.contains("a")) Some("contains") else None))
-        println("filter: " + a.filter(_.contains("a")))
-        println("filter: " + a.filter(_.contains("b")))
-        println("orElse: " + a.orElse(b))
-        println("orElse: " + n.orElse(b))
-        println("orElse: " + n.orElse(n))
-    }
-}
