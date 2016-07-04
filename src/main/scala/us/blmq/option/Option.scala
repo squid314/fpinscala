@@ -27,8 +27,7 @@ case class Some[+A](get: A) extends Option[A]
 object Option
 {
     def mean(is: Seq[Double]): Option[Double] =
-        ((None:Option[Double]) /: is) ((p, d) => p.map(_ + d).orElse(Some(d))).map(_ / is.size)
-//        is.aggregate(None[Double])((p, d) => p.map(_ + d).orElse(Some(d)), (_, _) => None)
+        ((None: Option[Double]) /: is) ((p, d) => p.map(_ + d).orElse(Some(d))).map(_ / is.size)
 
     def variance(is: Seq[Double]): Option[Double] =
         mean(is).flatMap(m => mean(is.map(x => Math.pow(x - m, 2))))
